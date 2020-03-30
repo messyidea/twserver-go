@@ -20,6 +20,7 @@ type httpServeDir struct {
 
 // serverConf defines the server configuration file.
 type serverConf struct {
+	Host             string
 	Port             int
 	DocumentRootDir  string
 	IndexFile        string
@@ -30,6 +31,7 @@ type serverConf struct {
 
 // config holds the server configuration file values.
 var config = serverConf{
+	Host:             "127.0.0.1",
 	Port:             8080,
 	DocumentRootDir:  "./www",
 	IndexFile:        "index.html",
@@ -183,7 +185,7 @@ func main() {
 		}
 	}
 
-	var bindStr = fmt.Sprintf(":%s", strconv.Itoa(config.Port))
+	var bindStr = fmt.Sprintf("%s:%s", config.Host, strconv.Itoa(config.Port))
 	fmt.Println(fmt.Sprintf("TW HTTP Server Listening on %s", bindStr))
 
 	if err := http.ListenAndServe(bindStr, nil); err != nil {
